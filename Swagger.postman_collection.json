@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "9dec1140-200b-4430-8cd4-63edb46e6153",
+		"name": "Swagger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27330241",
+		"_collection_link": "https://bold-crescent-521342.postman.co/workspace/fakerestaoiSwagger~0c5f875e-8c6f-4d69-9b20-07619465af3a/collection/27330241-9dec1140-200b-4430-8cd4-63edb46e6153?action=share&source=collection_link&creator=27330241"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create New User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 10,\r\n  \"userName\": \"Hany\",\r\n  \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/api/v1/Users"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"userName\": {{username}},\r\n  \"password\": {{password}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BaseURL}}/api/v1/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "Get Activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//select by random numbers \r",
+									"\r",
+									"var objects = pm.response.json().length\r",
+									"var randNum = Math.floor(Math.random()*objects)\r",
+									"\r",
+									"pm.collectionVariables.set(\"activityid\", \r",
+									"pm.response.json()[randNum].id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BaseURL}}/api/v1/Activities"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsondata = pm.response.json();\r",
+									"\r",
+									"pm.globals.set(\"title\",jsondata.title);\r",
+									"console.log(pm.globals.get(\"BaseURL\"))\r",
+									"\r",
+									"pm.globals.set(\"BaseURL\", \"https://fakerestapi.azurewebsites.net\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/api/v1/Activities/:id",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Activities",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "activityid",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

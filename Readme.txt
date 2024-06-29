@@ -1,0 +1,1 @@
+This collection from reqres website just for practicing with course ITI
